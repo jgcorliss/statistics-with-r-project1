@@ -1,0 +1,71 @@
+---
+title: "Exploring the BRFSS data"
+output: 
+  html_document: 
+    fig_height: 4
+    highlight: pygments
+    theme: spacelab
+---
+
+## Setup
+
+### Load packages
+
+```{r load-packages, message = FALSE}
+library(ggplot2)
+library(dplyr)
+```
+
+### Load data
+
+```{r load-data}
+load("brfss2013.RData")
+```
+
+## Part 1: Data
+
+In the 2013 BRFSS survey, responses were collected via randomly chosen "landline telephone- and cellular telephone-based surveys" [1] in all 50 US states, the District of Columbia, and several US territories and associated states including Puerto Rico, Guam, the US Virgin Islands, American Samoa, Federated States of Micronesia, and the country of Palau. Responses were only collected from non-institutionalized individuals aged 18 and older. In landline surveys, data is collected from a randomly chosen adult in the household.
+
+Findings from the 2013 BRFSS survey can be generalized to "the non-institutionalized adult population, aged 18 years or older, who reside in the US" [1]. This generalization is possible because random sampling was performed on the stated population through random landline and cellular calls.
+
+There are a few possible sources of bias in the data. One is non-response bias, that is, a bias introduced by some individuals not responding to the survey. Another is convenience bias: members of the population who do not own a cell phone, or who do not live in a household with a landline, cannot be reached by the survey [3].
+
+We cannot draw causal links between observed variables because the BRFSS is an observational study, meaning that the researchers do not interfere with how the data arise via random assignment of the survey participants to different groups with different values of a chosen explanatory variable [2].
+
+**References**
+
+1. BRFSS Codebook: `brfss_codebook.html`
+2. Introduction to Probability and Data video, "Observational Studies & Experiments"
+3. Introduction to Probability and Data video, "Sampling and sources of bias"
+
+## Part 2: Research questions
+
+**Research quesion 1:**
+
+**Research quesion 2:**
+
+**Research quesion 3:**
+
+## Part 3: Exploratory data analysis
+
+NOTE: Insert code chunks as needed by clicking on the "Insert a new code chunk" 
+button (green button with orange arrow) above. Make sure that your code is visible
+in the project you submit. Delete this note when before you submit your work.
+
+**Research quesion 1:**
+
+```{r}
+
+```
+
+**Research quesion 2:**
+
+```{r}
+
+```
+
+**Research quesion 3:**
+
+```{r}
+
+```
