@@ -42,13 +42,19 @@ We cannot draw causal links between observed variables because the BRFSS is an o
 
 **Research quesion 1**
 
-Among non-institutionalized adults in the US, is increased fruit and vegetable intake associated with improved overall health? The answer to this question could shed light on whether a healthy diet includes lots of fruit and vegetables. The variables of interest are:
+Among non-institutionalized adults in the US, is increased fruit and vegetable intake associated with improved overall health? The answer to this question could shed light on whether a healthy diet should include lots of fruit and vegetables. The variables of interest are:
 
 * `_frutsum` - Total Fruits Consumed Per Day
 * `_vegesum` - Total Vegetables Consumed Per Day
 * `genhlth` - General Health
 
 **Research quesion 2**
+
+Among non-institutionalized adults in the US, we investigate any differences in alcohol comsumption between veterans and non-veterans. The results could indicate whether veterans are at a lower or higher risk of alcohol addiction. We note that respondents are likely to underreport their alcohol consumption, leading to a possible bias in the data. The variables of interest are:
+
+* `veteran3`: Are You A Veteran
+* `alcday5`: Days In Past 30 Had Alcoholic Beverage
+* `avedrnk2`: Avg Alcoholic Drinks Per Day In Past 30
 
 **Research quesion 3**
 
@@ -114,7 +120,7 @@ Now we address our ultimate research question: is there a relationship between f
 ```{r}
 brfss2013 %>%
   filter(!is.na(frutvegsum)) %>%
-  ggplot(aes(x=genhlth, y=frutvegsum)) + geom_boxplot() + ylim(-1, 6)
+  ggplot(aes(x=genhlth, y=frutvegsum)) + geom_boxplot() + coord_cartesian(ylim=c(-1, 6))
 ```
 
 We see that as general health improves from "Poor" to "Excellent," there is a stepwise increase in the median fruit/vegetable consumption. We can investigate the median values in detail as follows:
@@ -130,12 +136,59 @@ Our results suggest that eating more fruits and vegetables every day is associat
 
 **Research quesion 2**
 
-```{r}
+First let's see the responses for veteran status:
 
+```{r}
+brfss2013 %>%
+  group_by(veteran3) %>%
+  summarize(count = n())
 ```
+
+What percentage of respondents are veterans?
+
+```{r}
+61446 / 429583
+```
+
+So 14.3% of respondents are veterans.
+
+The variable `alcday5` includes the frequency of alcohol consumption over the past 30 days. According to the Codebook, the first digit denotes days per week (1) or days per month (2), and the remaining digits indicate the count of days. We want to convert this variable to the number of days, over the last 30 days, that the respondent had an alcoholic beverage, and store the results in `alcday5_norm`:
+
+```{r}
+brfss2013 = brfss2013 %>%
+  mutate(alcday5_norm = ifelse((alcday5 >= 101) & (alcday5 <= 199), (alcday5 - 100) * 30/7, ifelse((alcday5 >= 201) & (alcday5 <= 299), alcday5 - 200, alcday5)))
+```
+
+To check our work, let's plot a histogram of `alcday5_norm`:
+
+```{r}
+ggplot(brfss2013, aes(x=alcday5_norm)) + geom_histogram(binwidth=1)
+```
+
+We see that the majority of respondents did not drink at all during the last 30 days, with a minority drinking every single day over the last 30 days.
+
+Next, to get the total number of drinks over the last 30 days, we multiply `alcday5_norm` and `avedrnk2`, and store the results in `drinks30days`:
+
+```{r}
+brfss2013 = brfss2013 %>%
+  mutate(drinks30days = alcday5_norm * avedrnk2)
+```
+
+Now to address our research question, we compare summary statistics of `drinks30days` for veterans and non-veterans:
+
+```{r}
+brfss2013 %>%
+  filter(!is.na(drinks30days)) %>%
+  group_by(veteran3) %>%
+  summarize(drinksmean = mean(drinks30days), drinksmedian = median(drinks30days), drinkssd = sd(drinks30days), drinksmin = min(drinks30days), drinksmax = max(drinks30days))
+```
+
+Comparing the means, we see that veterans drink 34% more than non-veterans on average. We can also compare boxplots of total drinks, separated by veteran status:
+
+```{r}
+ggplot(brfss2013, aes(x=veteran3, y=drinks30days)) + geom_boxplot() + coord_cartesian(ylim=c(0,40))
+```
+
+Again we see that veterans tend to consume more alcohol. However, we cannot conclude that being a veteran causes one to drink more alcohol.
 
 **Research quesion 3**
-
-```{r}
-
-```
