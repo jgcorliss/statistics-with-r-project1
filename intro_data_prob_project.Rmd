@@ -40,31 +40,101 @@ We cannot draw causal links between observed variables because the BRFSS is an o
 
 ## Part 2: Research questions
 
-**Research quesion 1:**
+**Research quesion 1**
 
-**Research quesion 2:**
+Among non-institutionalized adults in the US, is increased fruit and vegetable intake associated with improved overall health? The answer to this question could shed light on whether a healthy diet includes lots of fruit and vegetables. The variables of interest are:
 
-**Research quesion 3:**
+* `_frutsum` - Total Fruits Consumed Per Day
+* `_vegesum` - Total Vegetables Consumed Per Day
+* `genhlth` - General Health
+
+**Research quesion 2**
+
+**Research quesion 3**
 
 ## Part 3: Exploratory data analysis
 
-NOTE: Insert code chunks as needed by clicking on the "Insert a new code chunk" 
-button (green button with orange arrow) above. Make sure that your code is visible
-in the project you submit. Delete this note when before you submit your work.
+**Research quesion 1**
 
-**Research quesion 1:**
+First we use `group_by` together with `summarize` to view the value counts in the `genhlth` variable:
+
+```{r}
+brfss2013 %>%
+  group_by(genhlth) %>%
+  summarize(count = n())
+```
+
+We see that there are 1985 missing values. Let's visualize the general health values in a bar plot:
+
+```{r}
+ggplot(brfss2013, aes(x=genhlth)) + geom_bar()
+```
+
+A majority of respondents consider their health to be either "Very good" or "Good."
+
+Next let's explore the `_frutsum` and `_vegesum` variables. According to the Codebook, both `_vegesum` and `_frutsum` have 2 implied decimal places, meaning there should be a decimal point two places from the right end of each value. Let's add this decimal point by dividing each variable by 100:
+
+```{r}
+brfss2013$X_frutsum = brfss2013$X_frutsum / 100
+brfss2013$X_vegesum = brfss2013$X_vegesum / 100
+```
+
+Next let's calculate summary statistics of `_vegesum` and `_frutsum`, after filtering out NA values. Starting with `_vegesum`:
+
+```{r}
+brfss2013 %>%
+  filter(!is.na(X_vegesum)) %>%
+  summarise(vegemean = mean(X_vegesum), vegemedian = median(X_vegesum), vegesd = sd(X_vegesum), vegemin = min(X_vegesum), vegemax = max(X_vegesum))
+```
+
+Now we do the same for `_frutsum`:
+
+```{r}
+brfss2013 %>%
+  filter(!is.na(X_frutsum)) %>%
+  summarise(frutmean = mean(X_frutsum), frutmedian = median(X_frutsum), frutsd = sd(X_frutsum), frutmin = min(X_frutsum), frutmax = max(X_frutsum))
+```
+
+Looking at the medians of `_vegesum` and `_frutsum`, a typical respondent eats 1.65 vegetables a day and 1.03 fruits per day. Both standard deviations are around 1.5, despite observed maxima of 198.27 for `_vegesum` and 198 for `_frutsum`.
+
+Next we want to compute the total number of fruits and vegetables consumed. We do this by adding together `_frutsum` and `_vegesum` and storing the results in a new variable, `frutvegsum`:
+
+```{r}
+brfss2013$frutvegsum = brfss2013$X_frutsum + brfss2013$X_vegesum
+```
+
+Now let's plot a histogram of `frutvegsum`. We ignore outliers by only including bins from 0 to 15.
+
+```{r}
+ggplot(brfss2013, aes(x=frutvegsum)) + geom_histogram(binwidth=0.25) + xlim(-1, 16)
+```
+
+Now we address our ultimate research question: is there a relationship between fruit/vegetable consumption and overall health? We plot a separate boxplot of `frutvegsum` for each observed value of `genhlth`, once again neglecting outliers by setting the y-axis limits:
+
+```{r}
+brfss2013 %>%
+  filter(!is.na(frutvegsum)) %>%
+  ggplot(aes(x=genhlth, y=frutvegsum)) + geom_boxplot() + ylim(-1, 6)
+```
+
+We see that as general health improves from "Poor" to "Excellent," there is a stepwise increase in the median fruit/vegetable consumption. We can investigate the median values in detail as follows:
+
+```{r}
+brfss2013 %>%
+  filter(!is.na(frutvegsum)) %>%
+  group_by(genhlth) %>%
+  summarize(median_frutvegsum = median(frutvegsum))
+```
+
+Our results suggest that eating more fruits and vegetables every day is associated with improved overall health. However, we cannot conclude that increasing or decreasing fruit/vegetable consumption will directly affect one's overall health.
+
+**Research quesion 2**
 
 ```{r}
 
 ```
 
-**Research quesion 2:**
-
-```{r}
-
-```
-
-**Research quesion 3:**
+**Research quesion 3**
 
 ```{r}
 
