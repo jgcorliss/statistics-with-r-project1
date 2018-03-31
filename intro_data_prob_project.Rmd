@@ -1,11 +1,15 @@
 ---
-title: "Exploring the BRFSS data"
+title: "Statistics with R: Introduction to Probability and Data"
 output: 
   html_document: 
     fig_height: 4
     highlight: pygments
     theme: spacelab
 ---
+
+# Final Project: Exploring the BRFSS Dataset
+
+**By Joseph Corliss**
 
 ## Setup
 
@@ -58,6 +62,11 @@ Among non-institutionalized adults in the US, we investigate any differences in 
 
 **Research quesion 3**
 
+Which states have the highest prevalence of smoking adults? In each state and US territory, we compare the percentage of respondents who currently smoke cigarettes. The variables of interest are:
+
+* `_state`: State Fips Code
+* `_rfsmok3`: Current Smoking Calculated Variable
+
 ## Part 3: Exploratory data analysis
 
 **Research quesion 1**
@@ -73,7 +82,7 @@ brfss2013 %>%
 We see that there are 1985 missing values. Let's visualize the general health values in a bar plot:
 
 ```{r}
-ggplot(brfss2013, aes(x=genhlth)) + geom_bar()
+ggplot(brfss2013, aes(x=genhlth)) + geom_bar() + xlab("General Health") + ylab("Count")
 ```
 
 A majority of respondents consider their health to be either "Very good" or "Good."
@@ -112,7 +121,7 @@ brfss2013$frutvegsum = brfss2013$X_frutsum + brfss2013$X_vegesum
 Now let's plot a histogram of `frutvegsum`. We ignore outliers by only including bins from 0 to 15.
 
 ```{r}
-ggplot(brfss2013, aes(x=frutvegsum)) + geom_histogram(binwidth=0.25) + xlim(-1, 16)
+ggplot(brfss2013, aes(x=frutvegsum)) + geom_histogram(binwidth=0.25) + xlim(-1, 16) + xlab("Total Fruit/Vegetable Consumption") + ylab("Count")
 ```
 
 Now we address our ultimate research question: is there a relationship between fruit/vegetable consumption and overall health? We plot a separate boxplot of `frutvegsum` for each observed value of `genhlth`, once again neglecting outliers by setting the y-axis limits:
@@ -120,7 +129,7 @@ Now we address our ultimate research question: is there a relationship between f
 ```{r}
 brfss2013 %>%
   filter(!is.na(frutvegsum)) %>%
-  ggplot(aes(x=genhlth, y=frutvegsum)) + geom_boxplot() + coord_cartesian(ylim=c(-1, 6))
+  ggplot(aes(x=genhlth, y=frutvegsum)) + geom_boxplot() + coord_cartesian(ylim=c(-1, 6)) + xlab("General Health") + ylab("Total Fruit/Vegetable Consumption")
 ```
 
 We see that as general health improves from "Poor" to "Excellent," there is a stepwise increase in the median fruit/vegetable consumption. We can investigate the median values in detail as follows:
@@ -162,7 +171,7 @@ brfss2013 = brfss2013 %>%
 To check our work, let's plot a histogram of `alcday5_norm`:
 
 ```{r}
-ggplot(brfss2013, aes(x=alcday5_norm)) + geom_histogram(binwidth=1)
+ggplot(brfss2013, aes(x=alcday5_norm)) + geom_histogram(binwidth=1) + xlab("No. Days Consumed Alcohol in Last 30 Days") + ylab("Count")
 ```
 
 We see that the majority of respondents did not drink at all during the last 30 days, with a minority drinking every single day over the last 30 days.
@@ -186,9 +195,52 @@ brfss2013 %>%
 Comparing the means, we see that veterans drink 34% more than non-veterans on average. We can also compare boxplots of total drinks, separated by veteran status:
 
 ```{r}
-ggplot(brfss2013, aes(x=veteran3, y=drinks30days)) + geom_boxplot() + coord_cartesian(ylim=c(0,40))
+ggplot(brfss2013, aes(x=veteran3, y=drinks30days)) + geom_boxplot() + coord_cartesian(ylim=c(0,40)) + xlab("Veteran Status") + ylab("No. Drinks over Last 30 Days")
 ```
 
 Again we see that veterans tend to consume more alcohol. However, we cannot conclude that being a veteran causes one to drink more alcohol.
 
 **Research quesion 3**
+
+The variable `_rfsmok3` documents adults who are current smokers: it takes the value "Yes" for a respondent who currently smokes some or all days, and "No" for a respondent who is a former smoker, or never smoked. Let's examine the values of `_rfsmok3`:
+
+```{r}
+brfss2013 %>%
+  group_by(X_rfsmok3) %>%
+  summarize(count = n())
+```
+
+To compare smoking rates, we convert `_rfsmok3` to 1 for "Yes," and 0 for "No":
+
+```{r}
+brfss2013  = brfss2013 %>%
+  mutate(X_rfsmok3 = ifelse(X_rfsmok3 == "Yes", 1, 0))
+```
+
+Let's check `_rfsmok3` again:
+
+```{r}
+brfss2013 %>%
+  group_by(X_rfsmok3) %>%
+  summarize(count = n())
+```
+
+Looks correct. Now to address our research question, we compare the current smoking rates in each state by computing the mean of `_rfsmok3`, grouped by state and sorted in descending order by smoking prevalence:
+
+```{r}
+smokers_by_state = brfss2013 %>%
+  filter((X_state != 0) & (X_state != 80)) %>% # Filter out extraneous X_state values
+  group_by(X_state) %>%
+  summarize(fraction_current_smokers = mean(X_rfsmok3, na.rm=TRUE)) %>%
+  arrange(desc(fraction_current_smokers))
+
+smokers_by_state
+```
+
+Let's visualize the results in a barplot:
+
+```{r fig.width=6, fig.height=8}
+ggplot(smokers_by_state, aes(x=reorder(X_state, fraction_current_smokers), y=fraction_current_smokers)) + geom_col() + coord_flip() + xlab("% of Adults Currently Smoking") + ylab("State")
+```
+
+We've learned that the five states with the highest rates of smoking are West Virginia, Guam (a US territory), Kentucky, Tennessee, Ohio, and the five states with the lowest rates of smoking are Puerto Rico (a US territory), Utah, California, Hawaii, and Washington state.
