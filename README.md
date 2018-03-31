@@ -1,6 +1,6 @@
 # Exploring Data from the Behavioral Risk Factor Surveillance System
 
-This repository contains my final data analysis project for the Coursera course [Introduction to Probability and Data](https://www.coursera.org/learn/probability-intro), which is Course 1 of 5 in the Statistics with R Specialization. In this project, I investigated novel research questions regarding the 2013 data from the Behavioral Risk Factor Surveillance System (BRFSS). To view the full project including all output and plots, please download the project HTML file and open in a web browser. The repository files are as follows:
+This repository contains my final data analysis project for the Coursera course [Introduction to Probability and Data](https://www.coursera.org/learn/probability-intro), which is Course 1 of 5 in the Statistics with R Specialization. In this project, I investigated novel research questions regarding the 2013 data from the Behavioral Risk Factor Surveillance System (BRFSS). **To view the full project, including all output and plots, please download the project HTML file and open in a web browser.** The repository files are as follows:
 
 * `brfss2013.RData` - Project dataset
 * `brfss_codebook.html` - Dataset codebook
