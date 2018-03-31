@@ -71,6 +71,8 @@ Which states have the highest prevalence of smoking adults? In each state and US
 
 **Research quesion 1**
 
+*Among non-institutionalized adults in the US, is increased fruit and vegetable intake associated with improved overall health? The answer to this question could shed light on whether a healthy diet should include lots of fruit and vegetables.*
+
 First we use `group_by` together with `summarize` to view the value counts in the `genhlth` variable:
 
 ```{r}
@@ -145,6 +147,8 @@ Our results suggest that eating more fruits and vegetables every day is associat
 
 **Research quesion 2**
 
+*Among non-institutionalized adults in the US, we investigate any differences in alcohol comsumption between veterans and non-veterans. The results could indicate whether veterans are at a lower or higher risk of alcohol addiction. We note that respondents are likely to underreport their alcohol consumption, leading to a possible bias in the data.*
+
 First let's see the responses for veteran status:
 
 ```{r}
@@ -201,6 +205,8 @@ ggplot(brfss2013, aes(x=veteran3, y=drinks30days)) + geom_boxplot() + coord_cart
 Again we see that veterans tend to consume more alcohol. However, we cannot conclude that being a veteran causes one to drink more alcohol.
 
 **Research quesion 3**
+
+*Which states have the highest prevalence of smoking adults? In each state and US territory, we compare the percentage of respondents who currently smoke cigarettes.*
 
 The variable `_rfsmok3` documents adults who are current smokers: it takes the value "Yes" for a respondent who currently smokes some or all days, and "No" for a respondent who is a former smoker, or never smoked. Let's examine the values of `_rfsmok3`:
 
