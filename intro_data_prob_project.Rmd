@@ -7,9 +7,9 @@ output:
     theme: spacelab
 ---
 
-# Final Project: Exploring the BRFSS Dataset
+# Data Analysis Project: Exploring the BRFSS 2013 Dataset
 
-**By Joseph Corliss**
+***By Joseph Corliss***
 
 ## Setup
 
@@ -44,7 +44,7 @@ We cannot draw causal links between observed variables because the BRFSS is an o
 
 ## Part 2: Research questions
 
-**Research quesion 1**
+### Research quesion 1
 
 Among non-institutionalized adults in the US, is increased fruit and vegetable intake associated with improved overall health? The answer to this question could shed light on whether a healthy diet should include lots of fruit and vegetables. The variables of interest are:
 
@@ -52,7 +52,7 @@ Among non-institutionalized adults in the US, is increased fruit and vegetable i
 * `_vegesum` - Total Vegetables Consumed Per Day
 * `genhlth` - General Health
 
-**Research quesion 2**
+### Research quesion 2
 
 Among non-institutionalized adults in the US, we investigate any differences in alcohol comsumption between veterans and non-veterans. The results could indicate whether veterans are at a lower or higher risk of alcohol addiction. We note that respondents are likely to underreport their alcohol consumption, leading to a possible bias in the data. The variables of interest are:
 
@@ -60,16 +60,16 @@ Among non-institutionalized adults in the US, we investigate any differences in 
 * `alcday5`: Days In Past 30 Had Alcoholic Beverage
 * `avedrnk2`: Avg Alcoholic Drinks Per Day In Past 30
 
-**Research quesion 3**
+### Research quesion 3
 
 Which states have the highest prevalence of smoking adults? In each state and US territory, we compare the percentage of respondents who currently smoke cigarettes. The variables of interest are:
 
 * `_state`: State Fips Code
 * `_rfsmok3`: Current Smoking Calculated Variable
 
-## Part 3: Exploratory data analysis
+## Part 3: Exploratory Data Analysis
 
-**Research quesion 1**
+### Research quesion 1
 
 *Among non-institutionalized adults in the US, is increased fruit and vegetable intake associated with improved overall health? The answer to this question could shed light on whether a healthy diet should include lots of fruit and vegetables.*
 
@@ -145,7 +145,7 @@ brfss2013 %>%
 
 Our results suggest that eating more fruits and vegetables every day is associated with improved overall health. However, we cannot conclude that increasing or decreasing fruit/vegetable consumption will directly affect one's overall health.
 
-**Research quesion 2**
+### Research quesion 2
 
 *Among non-institutionalized adults in the US, we investigate any differences in alcohol comsumption between veterans and non-veterans. The results could indicate whether veterans are at a lower or higher risk of alcohol addiction. We note that respondents are likely to underreport their alcohol consumption, leading to a possible bias in the data.*
 
@@ -204,7 +204,7 @@ ggplot(brfss2013, aes(x=veteran3, y=drinks30days)) + geom_boxplot() + coord_cart
 
 Again we see that veterans tend to consume more alcohol. However, we cannot conclude that being a veteran causes one to drink more alcohol.
 
-**Research quesion 3**
+### Research quesion 3
 
 *Which states have the highest prevalence of smoking adults? In each state and US territory, we compare the percentage of respondents who currently smoke cigarettes.*
 
