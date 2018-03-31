@@ -1,6 +1,6 @@
 # Introduction to Probability and Data: Data Analysis Project
 
-This repository my data analysis project for the Coursera course [Introduction to Probability and Data](https://www.coursera.org/learn/probability-intro), which is Course 1 of 5 in the Statistics with R Specialization. The repository files are as follows:
+This repository contains my data analysis project for the Coursera course [Introduction to Probability and Data](https://www.coursera.org/learn/probability-intro), which is Course 1 of 5 in the Statistics with R Specialization. In this project, I investigated novel research questions regarding the 2013 data from the Behavioral Risk Factor Surveillance System (BRFSS). To view the full project including all output and plots, please download the project HTML file and open in a web browser. The repository files are as follows:
 
 * `brfss2013.RData` - Project dataset
 * `brfss_codebook.html` - Dataset codebook
@@ -8,9 +8,7 @@ This repository my data analysis project for the Coursera course [Introduction t
 * `intro_data_prob_project.html` - **Project HTML file**
 * `intro_data_prob_project_rubric.html` - Grading rubric
 
-To view the full project including all output and plots, please download the project HTML file and open in a web browser.
-
-In this project, I developed novel research questions regarding the 2013 data from the Behavioral Risk Factor Surveillance System (BRFSS). According to the dataset codebook, the BRFSS is "a collaborative project between all of the states in the United States (US) and participating US territories and the Centers for Disease Control and Prevention (CDC). [...] BRFSS is an ongoing surveillance system designed to measure behavioral risk factors for the non-institutionalized adult population (18 years of age and older) residing in the US. [...] The BRFSS objective is to collect uniform, state-specific data on preventive health practices and risk behaviors that are linked to chronic diseases, injuries, and preventable infectious diseases that affect the adult population."
+According to the dataset codebook, the BRFSS is "a collaborative project between all of the states in the United States (US) and participating US territories and the Centers for Disease Control and Prevention (CDC). [...] BRFSS is an ongoing surveillance system designed to measure behavioral risk factors for the non-institutionalized adult population (18 years of age and older) residing in the US. [...] The BRFSS objective is to collect uniform, state-specific data on preventive health practices and risk behaviors that are linked to chronic diseases, injuries, and preventable infectious diseases that affect the adult population."
 
 I investigated the following three research questions by studying summary statistics and data visualizations in R:
 
