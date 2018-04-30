@@ -12,6 +12,6 @@ According to the dataset codebook, the BRFSS is "a collaborative project between
 
 I identified three research questions that could be answered using this dataset by studying summary statistics and data visualizations in R:
 
-1. *Is increased fruit and vegetable intake associated with improved overall health?* I find that among US adults, greater consumption of fruits and vegetables is associated with improvements in perceived overall health.
-2. *Do levels of alcohol consumption differ between military veterans and non-veterans?* I find that on average, US adults who are military veterans consume more alcohol than non-veterans.
-3. *Which states have the highest prevalence of smoking adults?* I find that the five states with the highest rates of smoking are West Virginia, Guam (a US territory), Kentucky, Tennessee, Ohio, and the five states with the lowest rates of smoking are Puerto Rico (a US territory), Utah, California, Hawaii, and Washington state.
+1. **Is increased fruit and vegetable intake associated with improved overall health?** I find that among US adults, greater consumption of fruits and vegetables is associated with improvements in perceived overall health.
+2. **Do levels of alcohol consumption differ between military veterans and non-veterans?** I find that on average, US adults who are military veterans consume more alcohol than non-veterans.
+3. **Which states have the highest prevalence of smoking adults?** I find that the five states with the highest rates of smoking are West Virginia, Guam (a US territory), Kentucky, Tennessee, Ohio, and the five states with the lowest rates of smoking are Puerto Rico (a US territory), Utah, California, Hawaii, and Washington state.
